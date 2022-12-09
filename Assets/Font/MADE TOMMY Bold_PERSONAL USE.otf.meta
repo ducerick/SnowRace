@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: d88c96ca8c144f058e5c218c141f4f9e
+timeCreated: 1670322394
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: "MADE TOMMY Bold_PERSONAL USE"
+  fontNames:
+  - MADE TOMMY
+  fallbackFontReferences: []
+  customCharacters:
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData:
+  assetBundleName: 
+  assetBundleVariant: 

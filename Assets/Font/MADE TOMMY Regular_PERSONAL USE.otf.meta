@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: b354c93c0c404c27b501a11548f8ad8c
+timeCreated: 1670322394
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: "MADE TOMMY Regular_PERSONAL USE"
+  fontNames:
+  - MADE TOMMY
+  fallbackFontReferences: []
+  customCharacters:
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData:
+  assetBundleName: 
+  assetBundleVariant: 
