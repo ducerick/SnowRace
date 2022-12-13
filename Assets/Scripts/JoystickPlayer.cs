@@ -7,10 +7,15 @@ public class JoystickPlayer : MonoBehaviour
     public float speed;
     public FloatingJoystick variableJoystick;
     public Rigidbody rb;
+    public Vector3 direction;
 
     public void FixedUpdate()
     {
-        Vector3 direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-        transform.position = direction;
+        if(GameState.Instance.GState == State.Playing)
+        {
+            direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
+            rb.velocity = direction * speed;
+        }
     }
+
 }
