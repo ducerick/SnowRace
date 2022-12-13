@@ -42,7 +42,7 @@ public class AnimatorPlayer : MonoBehaviour
             changeState = snowBall.transform.localScale.y;
             animator.SetFloat("change_stage", changeState);
         }
-        else if(snowBall.transform.localScale.y > 0.5f && changeState < 1.0f)
+        else if(snowBall.transform.localScale.y > 0.5f && changeState < 0.8f)
         {
             changeState += Time.deltaTime * accleration;
             animator.SetFloat("change_stage", changeState);

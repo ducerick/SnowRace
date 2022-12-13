@@ -6,6 +6,7 @@ using UnityEngine;
 public class SnowBall : MonoBehaviour
 {
     [SerializeField] private Transform snowBall;
+    [SerializeField] private Transform player;
     private float expansionSpeed = 0.002f;
     private bool mouseMove;
     private Vector3 resetPosition;
@@ -42,9 +43,12 @@ public class SnowBall : MonoBehaviour
         {
             if (Input.mousePosition != resetPosition)
             {
-                snowBall.localScale += Vector3.one * expansionSpeed;
+                Vector3 scale = Vector3.one * expansionSpeed;
+                snowBall.localScale += scale;
+                snowBall.localPosition = new Vector3(0,snowBall.localScale.y * 0.5f, snowBall.localScale.z * 0.5f + 0.5f);
                 AnimatorPlayer.Instance.RollingBall();
             }
+            snowBall.Rotate(new Vector3(0, 0, 1));
         }
     }
 }
