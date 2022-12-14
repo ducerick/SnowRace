@@ -48,7 +48,9 @@ public class SnowBall : MonoBehaviour
                 snowBall.localPosition = new Vector3(0,snowBall.localScale.y * 0.5f, snowBall.localScale.z * 0.5f + 0.5f);
                 AnimatorPlayer.Instance.RollingBall();
             }
-            snowBall.Rotate(new Vector3(0, 0, 1));
+            snowBall.Rotate(new Vector3(1, 0, 0), 5);
         }
     }
+
+
 }
