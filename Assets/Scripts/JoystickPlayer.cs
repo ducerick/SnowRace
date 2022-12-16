@@ -17,5 +17,4 @@ public class JoystickPlayer : MonoBehaviour
             rb.velocity = direction * speed;
         }
     }
-
 }
