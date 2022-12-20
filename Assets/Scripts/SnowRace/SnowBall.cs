@@ -8,9 +8,26 @@ public class SnowBall : MonoBehaviour
     [SerializeField] private Transform snowBall;
     [SerializeField] private Transform player;
     private float expansionSpeed = 0.005f;
+    private float compressionSpeed = 0.001f;
     private bool mouseMove;
     private Vector3 resetPosition;
     private const float maxScaleBall = 3.0f;
+    private bool fallWater = false;
+
+    public static SnowBall Instance;
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,8 +38,15 @@ public class SnowBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckMouseMove();
-        BallExpansion();
+        if (!fallWater)
+        {
+            CheckMouseMove();
+            BallExpansion();
+        }
+        if (fallWater)
+        {
+            BallCompress();
+        }
     }
 
     private void CheckMouseMove()
@@ -52,11 +76,33 @@ public class SnowBall : MonoBehaviour
                 }
                 AnimatorPlayer.Instance.RollingBall();
             }
-            snowBall.Rotate(new Vector3(1, 0, 0), 5);
+            snowBall.Rotate(new Vector3(1, 0, 0), 10);
+        }
+    }
+
+    public void BallCompress()
+    {
+        if (snowBall.localScale.x >= 0.0f)
+        {
+            Vector3 scale = Vector3.one * compressionSpeed;
+            snowBall.localScale -= scale;
         }
     }
 
     public Vector3 GetScale() => snowBall.localScale;
 
+    public bool GetMouseMove() => mouseMove;
 
+    public float GetCompressionSpeed() => compressionSpeed;
+
+    public float GetExpansionSpeed() => expansionSpeed;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            snowBall.SetParent(null);
+            fallWater = true;
+        }
+    }
 }

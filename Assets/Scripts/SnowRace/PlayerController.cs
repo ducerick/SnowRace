@@ -51,6 +51,4 @@ public class PlayerController : MonoBehaviour
             AnimatorPlayer.Instance.Idle();
         }
     }
-
-    
 }

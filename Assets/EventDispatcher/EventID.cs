@@ -8,7 +8,6 @@ public enum EventID
     OnReplay,
     OnCharacterSelection,
     OnCharacterSelected,
-    OnCharacterInCarRange,
-    OnCharacterOutCarRange,
     OnActiveMainplay,
+    OnCharacterBuildRoad,
 }

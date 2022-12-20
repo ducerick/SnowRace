@@ -8,6 +8,10 @@ TagManager:
   - Elevator
   - IceBridge
   - EndGame
+  - FxTemporaire
+  - Water
+  - Plane
+  - Boat
   layers:
   - Default
   - TransparentFX
