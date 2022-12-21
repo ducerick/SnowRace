@@ -26,7 +26,7 @@ public class DrawBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (snowBall.GetScale().x > 0.2f)
+        if (snowBall.BallScale.x > 0.2f)
         {
             if (Physics.Raycast(Player.localPosition, -Vector3.up , out _hit) && snowBall.GetMouseMove())
             {

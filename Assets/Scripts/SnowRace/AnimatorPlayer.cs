@@ -52,4 +52,10 @@ public class AnimatorPlayer : MonoBehaviour
             animator.SetInteger("stage", 3);
         }
     }
+
+    public void Reset()
+    {
+        RunInPlace();
+        changeState = 0.0f;
+    }
 }

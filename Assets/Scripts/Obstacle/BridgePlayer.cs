@@ -6,20 +6,31 @@ using DG.Tweening;
 
 public class BridgePlayer : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> Road = new List<GameObject>();
-
+    public Transform Road;
+    private bool buildRoad = false;
+    private GameObject player;
+    public float SizeRoad;
+    public float MaxPos;
     private void Start()
     {
-        foreach(var obj in Road)
-        {
-            obj.GetComponent<Renderer>().enabled = false;
-        }
+        SizeRoad = Road.localScale.y;
+        MaxPos = -Road.localPosition.z;
     }
 
     private void Update()
     {
        
     }
+
+    private void FixedUpdate()
+    {
+        if (buildRoad && Road.localPosition.z < MaxPos && SnowBall.Instance.BallScale.x > 0.0f)
+        {
+            float offset = player.GetComponent<Rigidbody>().velocity.z * Time.deltaTime;
+            Road.localPosition += new Vector3(0, 0, offset);
+        }
+    }
+
     private void OnEnable()
     {
         EventDispatcher.Instance.RegisterListener(EventID.OnCharacterBuildRoad, OnCharacterBuildRoad);
@@ -27,10 +38,8 @@ public class BridgePlayer : MonoBehaviour
 
     private void OnCharacterBuildRoad(object obj)
     {
-        if (Road.Contains((GameObject)obj))
-        {
-            Road[Road.IndexOf((GameObject)obj)].GetComponent<Renderer>().enabled = true;
-        }
+        buildRoad = true;
+        player = (GameObject)obj;
     }
 
 }

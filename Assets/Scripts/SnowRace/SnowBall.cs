@@ -9,16 +9,24 @@ public class SnowBall : MonoBehaviour
     [SerializeField] private Transform player;
     private float expansionSpeed = 0.005f;
     private float compressionSpeed = 0.001f;
-    private bool mouseMove;
+    
     private Vector3 resetPosition;
     private const float maxScaleBall = 3.0f;
     private bool fallWater = false;
+
+    public float MaxBallScale = 3.0f;
+    public bool mouseMove;
+    public Vector3 BallScale
+    {
+        get { return transform.localScale; }
+        set { transform.localScale = value; }
+    }
 
     public static SnowBall Instance;
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -89,20 +97,18 @@ public class SnowBall : MonoBehaviour
         }
     }
 
-    public Vector3 GetScale() => snowBall.localScale;
-
     public bool GetMouseMove() => mouseMove;
 
     public float GetCompressionSpeed() => compressionSpeed;
 
     public float GetExpansionSpeed() => expansionSpeed;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Water"))
-        {
-            snowBall.SetParent(null);
-            fallWater = true;
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Water"))
+    //    {
+    //        snowBall.SetParent(null);
+    //        fallWater = true;
+    //    }
+    //}
 }
