@@ -8,6 +8,12 @@ public class Collision : MonoBehaviour
     public BridgePlayer bridge;
     private bool colBridge = false;
     private bool colWater = false;
+    private Vector3 velocity;
+
+    private void Start()
+    {
+        velocity = transform.GetComponent<Rigidbody>().velocity;
+    }
 
     private void Update()
     {
@@ -45,9 +51,10 @@ public class Collision : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("IceBridge"))
+        if (other.CompareTag("Plane"))
         {
-            SnowBall.Instance.mouseMove = true;
+            PlayerController.OnPlane = false;
+            velocity = Vector3.zero;
         }
     }
 
@@ -62,7 +69,7 @@ public class Collision : MonoBehaviour
         }
         else
         {
-            transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            velocity = Vector3.zero;
             SnowBall.Instance.mouseMove = false;
         }
     }
@@ -72,8 +79,9 @@ public class Collision : MonoBehaviour
         yield return new WaitForSeconds(1f);
         transform.localPosition = Vector3.zero;
         SnowBall.Instance.BallScale = Vector3.zero;
-        transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        velocity = Vector3.zero;
         AnimatorPlayer.Instance.Reset();
+        PlayerController.OnPlane = true;
         colWater = false;
     }
 }

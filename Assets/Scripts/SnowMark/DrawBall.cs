@@ -11,13 +11,14 @@ public class DrawBall : MonoBehaviour
     private RaycastHit _hit;
     public SnowBall snowBall;
     public Transform Player;
+    public float BrushSize;
 
     // Start is called before the first frame update
     void Start()
     {
         _drawMaterial = new Material(_drawShader);
         _drawMaterial.SetVector("_Color", Color.red);
-
+        _drawMaterial.SetFloat("_Size", BrushSize);
         _snowMaterial = GetComponent<MeshRenderer>().material;
         _splatmap = new RenderTexture(1024, 1024, 0, RenderTextureFormat.ARGBFloat);
         _snowMaterial.SetTexture("_Splat", _splatmap);
