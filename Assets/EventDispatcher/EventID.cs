@@ -10,4 +10,5 @@ public enum EventID
     OnCharacterSelected,
     OnActiveMainplay,
     OnCharacterBuildRoad,
+    OnCharacterUnBuild,
 }

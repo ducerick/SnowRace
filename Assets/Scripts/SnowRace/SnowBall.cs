@@ -72,7 +72,7 @@ public class SnowBall : MonoBehaviour
 
     private void BallExpansion()
     {
-        if (mouseMove)
+        if (mouseMove && PlayerController.OnPlane)
         {
             if (Input.mousePosition != resetPosition)
             {
@@ -103,12 +103,4 @@ public class SnowBall : MonoBehaviour
 
     public float GetExpansionSpeed() => expansionSpeed;
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Water"))
-    //    {
-    //        snowBall.SetParent(null);
-    //        fallWater = true;
-    //    }
-    //}
 }

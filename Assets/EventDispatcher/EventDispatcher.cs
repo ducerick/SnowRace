@@ -161,5 +161,10 @@ public static class EventDispatcherExtension
     {
         EventDispatcher.Instance.RemoveListener(eventID, callback);
     }
+
+    internal static void RegisterListener(EventID onCharacterBuildRoad1, object onCharacterBuildRoad2)
+    {
+        throw new NotImplementedException();
+    }
 }
 #endregion

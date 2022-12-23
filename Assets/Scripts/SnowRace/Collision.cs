@@ -9,10 +9,12 @@ public class Collision : MonoBehaviour
     private bool colBridge = false;
     private bool colWater = false;
     private Vector3 velocity;
+    private Rigidbody myRigidbody;
 
     private void Start()
     {
-        velocity = transform.GetComponent<Rigidbody>().velocity;
+        myRigidbody = transform.GetComponent<Rigidbody>();
+        velocity = myRigidbody.velocity;
     }
 
     private void Update()
@@ -33,6 +35,11 @@ public class Collision : MonoBehaviour
             transform.SetParent(collision.transform);
             transform.localPosition = new Vector3(1, 0, 3);
         }
+
+        if (collision.transform.CompareTag("Plane"))
+        {
+            PlayerController.OnPlane = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -49,21 +56,34 @@ public class Collision : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(UnityEngine.Collision collision)
     {
-        if (other.CompareTag("Plane"))
+        if (collision.transform.CompareTag("Plane"))
         {
             PlayerController.OnPlane = false;
-            velocity = Vector3.zero;
+            if (!colBridge)
+            {
+                velocity = Vector3.zero;
+                transform.GetComponent<Rigidbody>().AddForce(Vector3.right, ForceMode.Force);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("IceBridge"))
+        {
+            colBridge = false;
+            JoystickPlayer.directOnBuild = false;
         }
     }
 
 
     private void BuildRoad()
     {
-        if(SnowBall.Instance.BallScale.x >= 0.0f)
+        if (SnowBall.Instance.BallScale.x >= 0.0f)
         {
-            var offset = transform.GetComponent<Rigidbody>().velocity.z * Time.deltaTime;
+            var offset = velocity.z * Time.deltaTime;
             float compress = offset * SnowBall.Instance.MaxBallScale / bridge.SizeRoad;
             SnowBall.Instance.BallScale -= new Vector3(compress, compress, compress);
         }

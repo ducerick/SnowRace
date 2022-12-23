@@ -17,14 +17,10 @@ public class BridgePlayer : MonoBehaviour
         MaxPos = -Road.localPosition.z;
     }
 
-    private void Update()
-    {
-       
-    }
 
     private void FixedUpdate()
     {
-        if (buildRoad && Road.localPosition.z < MaxPos && SnowBall.Instance.BallScale.x > 0.0f)
+        if (buildRoad && Road.localPosition.z < MaxPos )
         {
             float offset = player.GetComponent<Rigidbody>().velocity.z * Time.deltaTime;
             Road.localPosition += new Vector3(0, 0, offset);
@@ -33,7 +29,14 @@ public class BridgePlayer : MonoBehaviour
 
     private void OnEnable()
     {
+        EventDispatcher.Instance.RegisterListener(EventID.OnCharacterUnBuild, OnCharacterUnBuild);
         EventDispatcher.Instance.RegisterListener(EventID.OnCharacterBuildRoad, OnCharacterBuildRoad);
+    }
+
+    private void OnCharacterUnBuild(object obj)
+    {
+        buildRoad = false;
+        player = (GameObject)obj;
     }
 
     private void OnCharacterBuildRoad(object obj)
@@ -41,6 +44,5 @@ public class BridgePlayer : MonoBehaviour
         buildRoad = true;
         player = (GameObject)obj;
     }
-
 }
 
