@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody myRigidBody;
-    public static bool OnPlane;
+    public bool OnPlane { get; set; }
     [SerializeField] private JoystickPlayer joystickPlayer;
 
     private void Start()
@@ -18,11 +18,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (OnPlane)
-        {
-            CheckGameStart();
-            GameStart();
-        }
+        CheckGameStart();
+        GameStart();
     }
 
     private void GameStart()

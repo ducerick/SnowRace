@@ -5,7 +5,7 @@ using UnityEngine;
 public class DrawBall : MonoBehaviour
 {
     public Shader _drawShader;
-
+    public string namePlane;
     private RenderTexture _splatmap;
     private Material _snowMaterial, _drawMaterial;
     private RaycastHit _hit;
@@ -29,7 +29,8 @@ public class DrawBall : MonoBehaviour
     {
         if (snowBall.BallScale.x > 0.2f)
         {
-            if (Physics.Raycast(Player.localPosition, -Vector3.up , out _hit) && snowBall.GetMouseMove() && PlayerController.OnPlane)
+            if (Physics.Raycast(Player.localPosition, -Vector3.up , out _hit) && snowBall.GetMouseMove() 
+                && _hit.transform == transform && GameManager.Instance.player.OnPlane)
             {
                 _drawMaterial.SetVector("_Coordinate", new Vector4(_hit.textureCoord.x, _hit.textureCoord.y, 0, 0));
                 RenderTexture temp = RenderTexture.GetTemporary(_splatmap.width, _splatmap.height, 0, RenderTextureFormat.ARGBFloat);

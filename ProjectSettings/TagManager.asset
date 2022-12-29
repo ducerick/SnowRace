@@ -12,6 +12,12 @@ TagManager:
   - Water
   - Plane
   - Boat
+  - ADS
+  - WUD
+  - WLR
+  - TopRoad
+  - Plane2
+  - Step
   layers:
   - Default
   - TransparentFX

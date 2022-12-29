@@ -6,27 +6,28 @@ using DG.Tweening;
 public class Collision : MonoBehaviour
 {
     public BridgePlayer bridge;
-    private bool colBridge = false;
+    public JoystickPlayer joystick;
+    private bool onBridge = false;
     private bool colWater = false;
     private Vector3 velocity;
     private Rigidbody myRigidbody;
+    private PlayerController _player;
+    private Transform planeTranform;
 
     private void Start()
     {
         myRigidbody = transform.GetComponent<Rigidbody>();
         velocity = myRigidbody.velocity;
+        _player = GameManager.Instance.player;
     }
 
     private void Update()
     {
-        if (colBridge)
-        {
-            BuildRoad();
-        }
         if (colWater)
         {
             StartCoroutine(ResetGame());
         }
+
     }
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
@@ -38,70 +39,83 @@ public class Collision : MonoBehaviour
 
         if (collision.transform.CompareTag("Plane"))
         {
-            PlayerController.OnPlane = true;
+            _player.OnPlane = true;
+            planeTranform = collision.transform;
+        }
+
+        if (collision.transform.CompareTag("IceBridge"))
+        {
+            onBridge = true;
+            joystick.SetJoystick(AxisOptions.Vertical);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("IceBridge"))
-        {
-            colBridge = true;
-            EventDispatcher.Instance.PostEvent(EventID.OnCharacterBuildRoad, gameObject);
-        }
-
         if (other.CompareTag("Water"))
         {
             colWater = true;
         }
-    }
 
-    private void OnCollisionExit(UnityEngine.Collision collision)
-    {
-        if (collision.transform.CompareTag("Plane"))
+        if (other.CompareTag("Ray"))
         {
-            PlayerController.OnPlane = false;
-            if (!colBridge)
-            {
-                velocity = Vector3.zero;
-                transform.GetComponent<Rigidbody>().AddForce(Vector3.right, ForceMode.Force);
-            }
+            onBridge = false;
         }
+
+        if (other.CompareTag("Elevator"))
+        {
+            onBridge = false;
+        }
+
+        if (other.CompareTag("Step"))
+        {
+            onBridge = true;
+            
+            EventDispatcher.Instance.PostEvent(EventID.OnCharacterBuildStep, other.gameObject);
+        }
+
+        if (other.CompareTag("IceBridge"))
+        {
+            onBridge = true;
+            joystick.SetJoystick(AxisOptions.Vertical);
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("IceBridge"))
         {
-            colBridge = false;
-            JoystickPlayer.directOnBuild = false;
+            onBridge = false;
+            joystick.SetJoystick(AxisOptions.Both);
         }
     }
 
 
-    private void BuildRoad()
+    private void OnCollisionExit(UnityEngine.Collision collision)
     {
-        if (SnowBall.Instance.BallScale.x >= 0.0f)
+        if (collision.transform.CompareTag("Plane"))
         {
-            var offset = velocity.z * Time.deltaTime;
-            float compress = offset * SnowBall.Instance.MaxBallScale / bridge.SizeRoad;
-            SnowBall.Instance.BallScale -= new Vector3(compress, compress, compress);
+            _player.OnPlane = false;
         }
-        else
+
+        if (collision.transform.CompareTag("IceBridge"))
         {
-            velocity = Vector3.zero;
-            SnowBall.Instance.mouseMove = false;
+            onBridge = false;
+            joystick.SetJoystick(AxisOptions.Both);
         }
     }
 
     IEnumerator ResetGame()
     {
         yield return new WaitForSeconds(1f);
-        transform.localPosition = Vector3.zero;
+        transform.position = planeTranform.position + new Vector3(0, 0.06f, 0);
         SnowBall.Instance.BallScale = Vector3.zero;
         velocity = Vector3.zero;
         AnimatorPlayer.Instance.Reset();
-        PlayerController.OnPlane = true;
+        _player.OnPlane = true;
         colWater = false;
     }
+
+    public bool GetCollisionBridge() => onBridge;
 }

@@ -11,4 +11,6 @@ public enum EventID
     OnActiveMainplay,
     OnCharacterBuildRoad,
     OnCharacterUnBuild,
+    OnCharacterBuildStep,
+    OnCharacterUnBuildStep,
 }

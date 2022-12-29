@@ -7,7 +7,8 @@ using DG.Tweening;
 public class BridgePlayer : MonoBehaviour
 {
     public Transform Road;
-    private bool buildRoad = false;
+    public Transform MyBridge;
+    public bool buildRoad = false;
     private GameObject player;
     public float SizeRoad;
     public float MaxPos;
@@ -17,8 +18,7 @@ public class BridgePlayer : MonoBehaviour
         MaxPos = -Road.localPosition.z;
     }
 
-
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         if (buildRoad && Road.localPosition.z < MaxPos )
         {
@@ -30,7 +30,6 @@ public class BridgePlayer : MonoBehaviour
     private void OnEnable()
     {
         EventDispatcher.Instance.RegisterListener(EventID.OnCharacterUnBuild, OnCharacterUnBuild);
-        EventDispatcher.Instance.RegisterListener(EventID.OnCharacterBuildRoad, OnCharacterBuildRoad);
     }
 
     private void OnCharacterUnBuild(object obj)
@@ -39,10 +38,16 @@ public class BridgePlayer : MonoBehaviour
         player = (GameObject)obj;
     }
 
-    private void OnCharacterBuildRoad(object obj)
+
+    private void OnTriggerEnter(Collider other)
     {
-        buildRoad = true;
-        player = (GameObject)obj;
+        if (other.CompareTag("Player"))
+        {
+            buildRoad = true;
+            player = other.gameObject;
+            EventDispatcher.Instance.PostEvent(EventID.OnCharacterBuildRoad);
+        }
     }
+
 }
 

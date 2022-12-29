@@ -6,16 +6,20 @@ using UnityEngine;
 public class SnowBall : MonoBehaviour
 {
     [SerializeField] private Transform snowBall;
-    [SerializeField] private Transform player;
     private float expansionSpeed = 0.005f;
     private float compressionSpeed = 0.001f;
-    
+
     private Vector3 resetPosition;
     private const float maxScaleBall = 3.0f;
     private bool fallWater = false;
 
     public float MaxBallScale = 3.0f;
     public bool mouseMove;
+
+    private Vector3 playerVelocity;
+    private float brideSize;
+
+    [SerializeField] public GameObject Player;
     public Vector3 BallScale
     {
         get { return transform.localScale; }
@@ -40,7 +44,10 @@ public class SnowBall : MonoBehaviour
     void Start()
     {
         snowBall.localScale = new Vector3(0, 0, 0);
+        //playerVelocity = GameManager.Instance.player.GetComponent<Rigidbody>().velocity;
+        brideSize = GameManager.Instance.bridgePlayer.SizeRoad;
         mouseMove = false;
+
     }
 
     // Update is called once per frame
@@ -51,10 +58,13 @@ public class SnowBall : MonoBehaviour
             CheckMouseMove();
             BallExpansion();
         }
-        if (fallWater)
+        if (GameManager.Instance.playerCollision.GetCollisionBridge() 
+            && GameManager.Instance.joystickPlayer.turnback == false
+            && (GameManager.Instance.bridgePlayer.buildRoad 
+            || GameManager.Instance.stepBridge.buildStep))
         {
             BallCompress();
-        }
+        } 
     }
 
     private void CheckMouseMove()
@@ -72,29 +82,40 @@ public class SnowBall : MonoBehaviour
 
     private void BallExpansion()
     {
-        if (mouseMove && PlayerController.OnPlane)
+        if (mouseMove)
         {
-            if (Input.mousePosition != resetPosition)
-            {
-                if (snowBall.localScale.y <= maxScaleBall)
-                {
-                    Vector3 scale = Vector3.one * expansionSpeed;
-                    snowBall.localScale += scale;
-                    snowBall.localPosition = new Vector3(0, snowBall.localScale.y * 0.5f, snowBall.localScale.z * 0.5f + 0.5f);
-                }
-                AnimatorPlayer.Instance.RollingBall();
-            }
             snowBall.Rotate(new Vector3(1, 0, 0), 10);
+            if (GameManager.Instance.player.OnPlane)
+            {
+                if (Input.mousePosition != resetPosition)
+                {
+                    if (snowBall.localScale.y <= maxScaleBall)
+                    {
+                        Vector3 scale = Vector3.one * expansionSpeed;
+                        snowBall.localScale += scale;
+                        snowBall.localPosition = new Vector3(0, snowBall.localScale.y * 0.5f, snowBall.localScale.z * 0.5f + 0.5f);
+                    }
+                    AnimatorPlayer.Instance.RollingBall();
+                }
+            }
+
         }
     }
 
     public void BallCompress()
     {
-        if (snowBall.localScale.x >= 0.0f)
+        if (BallScale.x > 0.0f)
         {
-            Vector3 scale = Vector3.one * compressionSpeed;
-            snowBall.localScale -= scale;
+            float offset = Player.GetComponent<Rigidbody>().velocity.z * Time.deltaTime;
+            float compress = offset * MaxBallScale / brideSize;
+            BallScale -= new Vector3(compress, compress, compress);
+            snowBall.localPosition = new Vector3(0, snowBall.localScale.y * 0.5f, snowBall.localScale.z * 0.5f + 0.5f);
         }
+        else if (BallScale.x <= 0f)
+        {
+            GameState.Instance.GState = State.Stop;
+        }
+
     }
 
     public bool GetMouseMove() => mouseMove;

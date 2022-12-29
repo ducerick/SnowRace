@@ -8,63 +8,52 @@ public class JoystickPlayer : MonoBehaviour
     public FloatingJoystick variableJoystick;
     public Rigidbody rb;
     public Vector3 direction;
-    public static bool directOnBuild;
-    private bool turnback = false;
-    private float lastPosOnRoad;
-    private float offset;
-
-    private void Start()
-    {
-        directOnBuild = false;
-    }
+    public Collision playerCollision;
+    public bool turnback = false;
+    private float slopeForce = 10f;
 
     private void FixedUpdate()
     {
-        if(GameState.Instance.GState == State.Playing && (PlayerController.OnPlane || directOnBuild))
+        if(GameState.Instance.GState == State.Playing && (GameManager.Instance.player.OnPlane || playerCollision.GetCollisionBridge()))
         {
             direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-            Debug.Log(direction);
             rb.velocity = direction * speed;
         }
 
-        if (directOnBuild)
+        if (playerCollision.GetCollisionBridge())
         {
             if (variableJoystick.Vertical < 0.0f)
             {
                 EventDispatcher.Instance.PostEvent(EventID.OnCharacterUnBuild, gameObject);
+                EventDispatcher.Instance.PostEvent(EventID.OnCharacterUnBuildStep, gameObject);
                 transform.localEulerAngles = new Vector3(0, 180, 0);
                 turnback = true;
-                lastPosOnRoad = transform.localPosition.z;
             }
-            if (variableJoystick.Vertical > 0.0f && turnback)
-            {
-                transform.localEulerAngles = new Vector3(0, 0, 0);
-                offset = transform.localPosition.z - lastPosOnRoad;
-                lastPosOnRoad = transform.localPosition.z;
-            }
-
             if (variableJoystick.Vertical > 0.0f)
             {
-                if(transform.localPosition.z >= lastPosOnRoad + offset)
-                {
-                    EventDispatcher.Instance.PostEvent(EventID.OnCharacterBuildRoad, gameObject);
-                }
+                transform.localEulerAngles = new Vector3(0, 0, 0);
+                turnback = false;
             }
         } 
-        else
+    }
+
+    private void Update()
+    {
+        if (turnback)
         {
-            variableJoystick.AxisOptions = AxisOptions.Both;
+            SetForce();
+            GameState.Instance.GState = State.Playing;
         }
     }
 
-    private void OnEnable()
+    private void SetForce()
     {
-        EventDispatcher.Instance.RegisterListener(EventID.OnCharacterBuildRoad, OnCharacterBuildRoad);
+        if (playerCollision.GetCollisionBridge())
+            rb.AddForce(Vector3.down * slopeForce, ForceMode.Force);
     }
 
-    private void OnCharacterBuildRoad(object obj)
+    public void SetJoystick(AxisOptions option)
     {
-        variableJoystick.AxisOptions = AxisOptions.Vertical;
-        directOnBuild = true;
+        variableJoystick.AxisOptions = option;
     }
 }
