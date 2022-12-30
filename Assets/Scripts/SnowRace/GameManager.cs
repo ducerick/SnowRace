@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public JoystickPlayer joystickPlayer;
     public BridgePlayer bridgePlayer;
     public StepBridge stepBridge;
+    public SnowBall snowBall;
 
     public static GameManager Instance;
 

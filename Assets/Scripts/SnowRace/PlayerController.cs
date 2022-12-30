@@ -19,15 +19,14 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         CheckGameStart();
-        GameStart();
     }
 
-    private void GameStart()
+    private void FixedUpdate()
     {
-        SetRotation();
+        SetDirection();
     }
 
-    private void SetRotation()
+    private void SetDirection()
     {
         if (joystickPlayer.direction != Vector3.zero)
         {

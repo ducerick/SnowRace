@@ -7,8 +7,7 @@ public class Collision : MonoBehaviour
 {
     public BridgePlayer bridge;
     public JoystickPlayer joystick;
-    private bool onBridge = false;
-    private bool colWater = false;
+    public bool onBridge = false;
     private Vector3 velocity;
     private Rigidbody myRigidbody;
     private PlayerController _player;
@@ -23,10 +22,6 @@ public class Collision : MonoBehaviour
 
     private void Update()
     {
-        if (colWater)
-        {
-            StartCoroutine(ResetGame());
-        }
 
     }
     private void OnCollisionEnter(UnityEngine.Collision collision)
@@ -54,7 +49,7 @@ public class Collision : MonoBehaviour
     {
         if (other.CompareTag("Water"))
         {
-            colWater = true;
+            StartCoroutine(ResetGame());
         }
 
         if (other.CompareTag("Ray"))
@@ -70,7 +65,6 @@ public class Collision : MonoBehaviour
         if (other.CompareTag("Step"))
         {
             onBridge = true;
-            
             EventDispatcher.Instance.PostEvent(EventID.OnCharacterBuildStep, other.gameObject);
         }
 
@@ -110,11 +104,10 @@ public class Collision : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         transform.position = planeTranform.position + new Vector3(0, 0.06f, 0);
-        SnowBall.Instance.BallScale = Vector3.zero;
+        GameManager.Instance.snowBall.BallScale = Vector3.zero;
         velocity = Vector3.zero;
         AnimatorPlayer.Instance.Reset();
         _player.OnPlane = true;
-        colWater = false;
     }
 
     public bool GetCollisionBridge() => onBridge;

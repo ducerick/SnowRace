@@ -20,7 +20,7 @@ public class BridgePlayer : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (buildRoad && Road.localPosition.z < MaxPos )
+        if (buildRoad && Road.localPosition.z < MaxPos)
         {
             float offset = player.GetComponent<Rigidbody>().velocity.z * Time.deltaTime;
             Road.localPosition += new Vector3(0, 0, offset);
@@ -43,9 +43,12 @@ public class BridgePlayer : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            buildRoad = true;
-            player = other.gameObject;
-            EventDispatcher.Instance.PostEvent(EventID.OnCharacterBuildRoad);
+            if (GameManager.Instance.snowBall.BallScale.x >= 0f)
+            {
+                buildRoad = true;
+                player = other.gameObject;
+                EventDispatcher.Instance.PostEvent(EventID.OnCharacterBuildRoad);
+            }
         }
     }
 

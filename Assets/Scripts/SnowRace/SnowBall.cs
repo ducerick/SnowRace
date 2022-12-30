@@ -11,12 +11,9 @@ public class SnowBall : MonoBehaviour
 
     private Vector3 resetPosition;
     private const float maxScaleBall = 3.0f;
-    private bool fallWater = false;
 
     public float MaxBallScale = 3.0f;
     public bool mouseMove;
-
-    private Vector3 playerVelocity;
     private float brideSize;
 
     [SerializeField] public GameObject Player;
@@ -26,25 +23,15 @@ public class SnowBall : MonoBehaviour
         set { transform.localScale = value; }
     }
 
-    public static SnowBall Instance;
-
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
+       
     }
 
     // Start is called before the first frame update
     void Start()
     {
         snowBall.localScale = new Vector3(0, 0, 0);
-        //playerVelocity = GameManager.Instance.player.GetComponent<Rigidbody>().velocity;
         brideSize = GameManager.Instance.bridgePlayer.SizeRoad;
         mouseMove = false;
 
@@ -53,18 +40,19 @@ public class SnowBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!fallWater)
-        {
-            CheckMouseMove();
-            BallExpansion();
-        }
+        CheckMouseMove();
         if (GameManager.Instance.playerCollision.GetCollisionBridge() 
             && GameManager.Instance.joystickPlayer.turnback == false
             && (GameManager.Instance.bridgePlayer.buildRoad 
             || GameManager.Instance.stepBridge.buildStep))
         {
             BallCompress();
-        } 
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        BallExpansion();
     }
 
     private void CheckMouseMove()
@@ -104,14 +92,14 @@ public class SnowBall : MonoBehaviour
 
     public void BallCompress()
     {
-        if (BallScale.x > 0.0f)
+        if (BallScale.x >= 0f)
         {
             float offset = Player.GetComponent<Rigidbody>().velocity.z * Time.deltaTime;
             float compress = offset * MaxBallScale / brideSize;
             BallScale -= new Vector3(compress, compress, compress);
             snowBall.localPosition = new Vector3(0, snowBall.localScale.y * 0.5f, snowBall.localScale.z * 0.5f + 0.5f);
         }
-        else if (BallScale.x <= 0f)
+        else if (BallScale.x < 0f)
         {
             GameState.Instance.GState = State.Stop;
         }
