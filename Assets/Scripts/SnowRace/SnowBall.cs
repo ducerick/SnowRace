@@ -102,6 +102,7 @@ public class SnowBall : MonoBehaviour
         else if (BallScale.x < 0f)
         {
             GameState.Instance.GState = State.Stop;
+            Debug.Log("Bye");
         }
 
     }

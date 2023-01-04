@@ -371,6 +371,7 @@ GameObject:
   - component: {fileID: 100877647}
   - component: {fileID: 100877650}
   - component: {fileID: 100877649}
+  - component: {fileID: 100877651}
   m_Layer: 3
   m_Name: QuadFront
   m_TagString: Untagged
@@ -443,6 +444,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 100877646}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &100877651
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100877646}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.4, z: 0}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &140416570
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,6 +468,7 @@ GameObject:
   - component: {fileID: 140416571}
   - component: {fileID: 140416574}
   - component: {fileID: 140416573}
+  - component: {fileID: 140416575}
   m_Layer: 3
   m_Name: QuadRight
   m_TagString: Untagged
@@ -526,6 +541,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140416570}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &140416575
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140416570}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.4, z: 0}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!4 &145419484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1790980629769394887, guid: a602d563bde749b78f6e8ee7c2b4f9d8, type: 3}
@@ -5670,6 +5698,10 @@ PrefabInstance:
       value: TestBoat
       objectReference: {fileID: 0}
     - target: {fileID: 2613016224657286923, guid: 94ed7fc9df635ed489569e416628c30f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2613016224657286923, guid: 94ed7fc9df635ed489569e416628c30f, type: 3}
       propertyPath: m_TagString
       value: Boat
       objectReference: {fileID: 0}
@@ -6206,7 +6238,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396254972}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57932b374ac969d40900d06cf0d457fa, type: 3}
   m_Name: 
@@ -6223,7 +6255,7 @@ BoxCollider:
   m_GameObject: {fileID: 396254972}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 10, y: 5, z: 10}
   m_Center: {x: 0, y: -2.5, z: 0}
@@ -6292,24 +6324,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &404085347 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1790980629719060126, guid: a602d563bde749b78f6e8ee7c2b4f9d8, type: 3}
-  m_PrefabInstance: {fileID: 1717421458}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &404085351
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 404085347}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.0000001, y: 2.0000002, z: 2.1596773}
-  m_Center: {x: -0.0000003973643, y: -0.00000019483436, z: -0.5798435}
 --- !u!4 &428195028 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1790980629769394929, guid: a602d563bde749b78f6e8ee7c2b4f9d8, type: 3}
@@ -7283,24 +7297,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825119023}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &829041886 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1790980629719060770, guid: a602d563bde749b78f6e8ee7c2b4f9d8, type: 3}
-  m_PrefabInstance: {fileID: 1717421458}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &829041890
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829041886}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.0000001, y: 2.0000002, z: 3.0035932}
-  m_Center: {x: 0.000000049670536, y: 0.000000006377454, z: -1.0018015}
 --- !u!4 &833853766 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1790980629769393464, guid: a602d563bde749b78f6e8ee7c2b4f9d8, type: 3}
@@ -7674,6 +7670,7 @@ GameObject:
   - component: {fileID: 880087201}
   - component: {fileID: 880087204}
   - component: {fileID: 880087203}
+  - component: {fileID: 880087205}
   m_Layer: 3
   m_Name: QuadBehind
   m_TagString: Untagged
@@ -7746,6 +7743,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880087200}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &880087205
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880087200}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.4, z: 0}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &883679090
 GameObject:
   m_ObjectHideFlags: 0
@@ -7757,6 +7767,7 @@ GameObject:
   - component: {fileID: 883679091}
   - component: {fileID: 883679094}
   - component: {fileID: 883679093}
+  - component: {fileID: 883679095}
   m_Layer: 3
   m_Name: QuadLeft
   m_TagString: Untagged
@@ -7829,6 +7840,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883679090}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &883679095
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883679090}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.4, z: 0}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &888231587 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1790980629719060742, guid: a602d563bde749b78f6e8ee7c2b4f9d8, type: 3}
@@ -8976,8 +9000,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 0, z: 10}
-  m_Center: {x: 0, y: -0.16, z: 5}
+  m_Size: {x: 2, y: 2.805276, z: 10}
+  m_Center: {x: 0, y: 1, z: 5}
 --- !u!1 &1415089626
 GameObject:
   m_ObjectHideFlags: 0
@@ -9136,41 +9160,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3399c539641edd4b9b96ae38f68594e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
   variableJoystick: {fileID: 2029462088}
   rb: {fileID: 1421285556}
-  direction: {x: 0, y: 0, z: 0}
   playerCollision: {fileID: 1421285562}
+  slopeForce: 50
+  speed: 5
+  direction: {x: 0, y: 0, z: 0}
   turnback: 0
---- !u!114 &1421285560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1042901621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b0518df79242404ca2c704182b71dce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  coll: {fileID: 0}
-  volume: 0
-  customVolume: 0
-  dampeningFactor: 0.2
-  inFluidCount: 0
-  fluid: {fileID: 0}
-  simulateWaterTurbulence: 1
-  turbulenceStrength: 0.2
-  rndTimeOffset:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  floatStrength: 2
 --- !u!114 &1421285562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9591,7 +9587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1613116129
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12117,7 +12113,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3790966022572663428, guid: 9cc3dd52fbd45e946ab5d6b43d9d8bfe, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3790966022572663428, guid: 9cc3dd52fbd45e946ab5d6b43d9d8bfe, type: 3}
       propertyPath: m_LocalPosition.z

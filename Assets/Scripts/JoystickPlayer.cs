@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class JoystickPlayer : MonoBehaviour
 {
+    [SerializeField] private FloatingJoystick variableJoystick;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private Collision playerCollision;
+    [SerializeField] private float slopeForce = 10f;
+
     public float speed;
-    public FloatingJoystick variableJoystick;
-    public Rigidbody rb;
     public Vector3 direction;
-    public Collision playerCollision;
     public bool turnback = false;
-    private float slopeForce = 10f;
 
     private void FixedUpdate()
     {
@@ -18,6 +19,7 @@ public class JoystickPlayer : MonoBehaviour
         {
             direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
             rb.velocity = direction * speed;
+            Debug.Log("Hi");
         }
 
         if (playerCollision.GetCollisionBridge())

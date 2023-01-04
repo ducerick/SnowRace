@@ -16,8 +16,8 @@ TagManager:
   - WUD
   - WLR
   - TopRoad
-  - Plane2
   - Step
+  - GreenWay
   layers:
   - Default
   - TransparentFX
