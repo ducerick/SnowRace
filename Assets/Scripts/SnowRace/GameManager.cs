@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     public PlayerController player;
     public Collision playerCollision;
     public JoystickPlayer joystickPlayer;
-    public BridgePlayer bridgePlayer;
     public StepBridge stepBridge;
     public SnowBall snowBall;
 

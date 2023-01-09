@@ -21,20 +21,6 @@ public class PlayerController : MonoBehaviour
         CheckGameStart();
     }
 
-    private void FixedUpdate()
-    {
-        SetDirection();
-    }
-
-    private void SetDirection()
-    {
-        if (joystickPlayer.direction != Vector3.zero)
-        {
-            Quaternion toRotation = Quaternion.LookRotation(joystickPlayer.direction, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, joystickPlayer.speed);
-        }
-    }
-
     private void CheckGameStart()
     {
         if (Input.GetMouseButtonDown(0))

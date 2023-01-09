@@ -9,8 +9,9 @@ public enum EventID
     OnCharacterSelection,
     OnCharacterSelected,
     OnActiveMainplay,
-    //OnCharacterBuildRoad,
     OnCharacterUnBuild,
+    OnCharacterBuildRoad,
     OnCharacterBuildStep,
     OnCharacterUnBuildStep,
+    OnAIBuildRoad,
 }

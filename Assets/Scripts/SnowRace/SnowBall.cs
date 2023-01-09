@@ -14,7 +14,6 @@ public class SnowBall : MonoBehaviour
 
     public float MaxBallScale = 3.0f;
     public bool mouseMove;
-    private float brideSize;
 
     [SerializeField] public GameObject Player;
     public Vector3 BallScale
@@ -32,7 +31,6 @@ public class SnowBall : MonoBehaviour
     void Start()
     {
         snowBall.localScale = new Vector3(0, 0, 0);
-        brideSize = GameManager.Instance.bridgePlayer.SizeRoad;
         mouseMove = false;
 
     }
@@ -41,13 +39,6 @@ public class SnowBall : MonoBehaviour
     void Update()
     {
         CheckMouseMove();
-        if (GameManager.Instance.playerCollision.GetCollisionBridge() 
-            && GameManager.Instance.joystickPlayer.turnback == false
-            && (GameManager.Instance.bridgePlayer.buildRoad 
-            || GameManager.Instance.stepBridge.buildStep))
-        {
-            BallCompress();
-        }
     }
 
     private void FixedUpdate()
@@ -90,19 +81,15 @@ public class SnowBall : MonoBehaviour
         }
     }
 
-    public void BallCompress()
+    public void BallCompress(float sizeRoad)
     {
-        if (BallScale.x >= 0f)
+        if (BallScale.x >= 0f && GameState.Instance.GState == State.Playing)
         {
-            float offset = Player.GetComponent<Rigidbody>().velocity.z * Time.deltaTime;
+            float offset = GameManager.Instance.joystickPlayer.Offset.z;
+            float brideSize = sizeRoad;
             float compress = offset * MaxBallScale / brideSize;
             BallScale -= new Vector3(compress, compress, compress);
             snowBall.localPosition = new Vector3(0, snowBall.localScale.y * 0.5f, snowBall.localScale.z * 0.5f + 0.5f);
-        }
-        else if (BallScale.x < 0f)
-        {
-            GameState.Instance.GState = State.Stop;
-            Debug.Log("Bye");
         }
 
     }
