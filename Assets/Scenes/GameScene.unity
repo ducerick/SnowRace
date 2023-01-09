@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -108,7 +108,7 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.19
     agentHeight: 0.84
-    agentSlope: 16
+    agentSlope: 20
     agentClimb: 0.36
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
@@ -6017,9 +6017,9 @@ MonoBehaviour:
   startPos: {fileID: 1133461108}
   finishPos: {fileID: 2120844192}
   acrossBridge: {fileID: 1310134861}
+  Road: {fileID: 0}
   isFinish: 0
   SizeRoad: 10
-  AddPosition: 0.5
 --- !u!1 &293624453
 GameObject:
   m_ObjectHideFlags: 0
@@ -8748,6 +8748,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1790980629769393247, guid: a602d563bde749b78f6e8ee7c2b4f9d8, type: 3}
   m_PrefabInstance: {fileID: 1717421458}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1038861410 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3790966022572663428, guid: 9cc3dd52fbd45e946ab5d6b43d9d8bfe, type: 3}
+  m_PrefabInstance: {fileID: 3790966022472148854}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1040722655 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1790980629719061398, guid: a602d563bde749b78f6e8ee7c2b4f9d8, type: 3}
@@ -10284,9 +10289,9 @@ MonoBehaviour:
   startPos: {fileID: 174147962}
   finishPos: {fileID: 1856559326}
   acrossBridge: {fileID: 1576139250}
+  Road: {fileID: 1038861410}
   isFinish: 0
   SizeRoad: 10
-  AddPosition: 0.5
 --- !u!1 &1400352865
 GameObject:
   m_ObjectHideFlags: 0
@@ -11018,9 +11023,9 @@ MonoBehaviour:
   startPos: {fileID: 584116340}
   finishPos: {fileID: 1986809071}
   acrossBridge: {fileID: 2036785447}
+  Road: {fileID: 0}
   isFinish: 0
   SizeRoad: 10
-  AddPosition: 0.5
 --- !u!1001 &1546883912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19399,9 +19404,9 @@ MonoBehaviour:
   startPos: {fileID: 835553326}
   finishPos: {fileID: 1619071900}
   acrossBridge: {fileID: 570104730}
+  Road: {fileID: 0}
   isFinish: 0
   SizeRoad: 10
-  AddPosition: 0.5
 --- !u!1 &1922984154
 GameObject:
   m_ObjectHideFlags: 0
@@ -19754,9 +19759,9 @@ MonoBehaviour:
   startPos: {fileID: 1462772985}
   finishPos: {fileID: 1061546063}
   acrossBridge: {fileID: 618132694}
+  Road: {fileID: 0}
   isFinish: 0
   SizeRoad: 10
-  AddPosition: 0.5
 --- !u!4 &1986809071 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3790966024194490286, guid: 9cc3dd52fbd45e946ab5d6b43d9d8bfe, type: 3}
@@ -20700,7 +20705,6 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 256
-  collectedSnow: 0
   scaleMultiplier: 0
   snowball: {fileID: 2085440799}
 --- !u!114 &2145585240
@@ -20787,9 +20791,9 @@ MonoBehaviour:
   startPos: {fileID: 412493565}
   finishPos: {fileID: 709966603}
   acrossBridge: {fileID: 1332772316}
+  Road: {fileID: 0}
   isFinish: 0
   SizeRoad: 10
-  AddPosition: 0.5
 --- !u!1001 &3790966022472148854
 PrefabInstance:
   m_ObjectHideFlags: 0

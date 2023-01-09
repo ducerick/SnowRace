@@ -5,18 +5,17 @@ using UnityEngine;
 public class AIBridgeController : MonoBehaviour
 {
     public Transform startPos, finishPos, acrossBridge;
+    [SerializeField] Transform Road;
     public bool isFinish;
     [HideInInspector] public float SizeRoad = 10f;
-    public float AddPosition = 0f;
     public void StretchBridge(float value)
     {
-        if (transform.position.x >= SizeRoad/2)
+        if (Road.localPosition.z >= SizeRoad/2)
         {
             isFinish = true;
             return;
         }
-        AddPosition += value;
-        transform.localPosition += new Vector3(0, 0, AddPosition);
+        Road.localPosition += new Vector3(0, 0, value);
     }
 }
 

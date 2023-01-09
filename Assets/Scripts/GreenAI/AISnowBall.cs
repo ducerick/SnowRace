@@ -11,7 +11,6 @@ public class AISnowBall : MonoBehaviour
     [SerializeField] LayerMask layer;
     float bridgeMultiplier = 5;
 
-    public int collectedSnow = 0;
     [SerializeField] float scaleMultiplier = 0f;
     [SerializeField] Transform snowball;
     RaycastHit hit;
@@ -25,8 +24,8 @@ public class AISnowBall : MonoBehaviour
         snowball.Rotate(new Vector3(1, 0, 0), 10);
         //if (GameManager.instance. isFinish)
         //    return;
-        Physics.Raycast(transform.position + transform.forward / 3 + Vector3.up, -transform.up, out hit, 100, layer);
-        Debug.DrawRay(transform.position  + transform.forward / 3 + transform.transform.up, -transform.up * 5);
+        Physics.Raycast(transform.position + transform.forward / 5 + Vector3.up, -transform.up, out hit, 100, layer);
+        Debug.DrawRay(transform.position  + transform.forward / 5 + transform.transform.up, -transform.up * 5);
         if (hit.collider == null)
         {
             return;
@@ -51,12 +50,12 @@ public class AISnowBall : MonoBehaviour
         //{
         //    CollectSnow();
         //}
-        if (hit.collider.tag == "Road" && collectedSnow > 0)
+        if (hit.collider.tag == "Road" && snowball.transform.localScale.x > 0)
         {
             transform.position = new Vector3(hit.collider.transform.position.x, transform.position.y, transform.position.z);
-            if (!hit.collider.GetComponent<AIBridgeController>().isFinish)
+            if (!hit.collider.GetComponentInParent<AIBridgeController>().isFinish)
             {
-                hit.collider.GetComponent<AIBridgeController>().StretchBridge((.005f * bridgeMultiplier));
+                hit.collider.GetComponentInParent<AIBridgeController>().StretchBridge((.005f * bridgeMultiplier));
                 MakeBridge(hit.collider.gameObject);
             }
         }

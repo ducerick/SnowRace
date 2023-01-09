@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MakeBridgeState : AIState
 {
-    [SerializeField] bool backStartPos;
+    [SerializeField] bool backStartPos = false;
     [SerializeField] bool isFinishing;
     [SerializeField] AISnowBall aiSnowBall;
     public AIBridgeController aiBridgeController;
