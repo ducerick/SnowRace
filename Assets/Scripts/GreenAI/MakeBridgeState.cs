@@ -18,7 +18,7 @@ public class MakeBridgeState : AIState
         if(backStartPos)  // roll ball
         {
             ai.agent.SetDestination(aiBridgeController.startPos.position);
-            if (Vector3.Distance(transform.position, aiBridgeController.startPos.position) < .2f)
+            if (Vector3.Distance(ai.transform.position, aiBridgeController.startPos.position) < .1f)
             {
                 ai.currState = ai.rollSnowState;
                 backStartPos = false;
@@ -36,15 +36,14 @@ public class MakeBridgeState : AIState
             {
                 isFinishing = true;
             }
-            if(isFinishing)
+            if (isFinishing)
             {
                 ai.agent.SetDestination(aiBridgeController.acrossBridge.position);
-                if(Vector3.Distance(aiBridgeController.acrossBridge.position,transform.position) < .2f)
-                {
-                    isFinishing = false;
-                    ai.currState = ai.rollSnowState;
-                }
+                ai.currState = ai.onLongBridgeState;
+                ai.agent.enabled = false;
             }
         }
     }
+
+    public bool IsFinish() => isFinishing;
 }

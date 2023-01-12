@@ -14,13 +14,13 @@ public class RollSnowState : AIState
     RaycastHit hit;
     Ground ground;
     Vector3 currDestination;
-    
+
     public override void StartState(AIAnimations action)
     {
-        ai.animations.RollingBall();
         requiredSnow = Random.Range(minCollectedSnow, maxCollectedSnow);
         currDestination = FindWaypoint().position;
         ai.agent.SetDestination(currDestination);
+        ai.animations.StartRoll();
     }
     //private void OnDrawGizmos()
     //{
@@ -29,9 +29,12 @@ public class RollSnowState : AIState
     public override void UpdateState(AIAnimations action)
     {
         //Debug.DrawRay(transform.position + Vector3.up, -transform.up, Color.red);
+
+
         if (aiSnowBall.GetSnowScale() < requiredSnow)
         {
-            aiSnowBall.CollectSnow();
+            ai.animations.RollingBall();
+            StartCoroutine(aiSnowBall.CollectSnow(requiredSnow));
         }
         if (aiSnowBall.GetSnowScale() >= requiredSnow)
         {
@@ -39,7 +42,7 @@ public class RollSnowState : AIState
             ai.currState = ai.makeBridgeState;
             return;
         }
-        else if (Vector3.Distance(currDestination, ai.transform.position) < 2f)
+        else if (Vector3.Distance(currDestination, ai.transform.position) < 1f)
         {
             currDestination = FindWaypoint().position;
             ai.agent.SetDestination(currDestination);
@@ -49,12 +52,12 @@ public class RollSnowState : AIState
     {
         Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit, 100, layer);
 
-        
+
         if (hit.collider.TryGetComponent(out Ground _ground) && hit.collider != null)
         {
             this.ground = _ground;
         }
         //Collider[] colliders = Physics.OverlapSphere(this.transform.position, distance, layer2);
-        return ground.wayPoints[Random.Range(0, ground.wayPoints.Count- 1)].transform;  
+        return ground.wayPoints[Random.Range(0, ground.wayPoints.Count - 1)].transform;
     }
 }

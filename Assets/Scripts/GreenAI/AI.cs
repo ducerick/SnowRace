@@ -8,11 +8,18 @@ public class AI : MonoBehaviour
     public int aiIndex;
     public NavMeshAgent agent;
     public AIAnimations animations;
-    public WinState winState;
     public RollSnowState rollSnowState;
-    public DeathState deathState;
     public MakeBridgeState makeBridgeState;
+    public OnLongBridgeState onLongBridgeState;
     [SerializeField] private AIState _currState;
+
+    public static AI Instance;
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(this);
+    }
     public AIState currState
     {
         get => _currState;

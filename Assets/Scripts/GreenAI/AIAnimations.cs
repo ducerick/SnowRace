@@ -40,10 +40,10 @@ public class AIAnimations : MonoBehaviour
 
     public void RollingBall()
     {
-        animator.SetInteger("stage", 12);
         if (aiSnowBall.GetSnowScale() < 0.5f && changeState < 0.5f)
         {
-            changeState = aiSnowBall.transform.localScale.y;
+            animator.SetInteger("stage", 12);
+            changeState = aiSnowBall.GetSnowScale();
             animator.SetFloat("change_stage", changeState);
         }
         else if (aiSnowBall.GetSnowScale() > 0.5f && changeState < 0.8f)
@@ -55,6 +55,12 @@ public class AIAnimations : MonoBehaviour
         {
             animator.SetInteger("stage", 3);
         }
+    }
+
+    public void StartRoll()
+    {
+        animator.SetFloat("change_stage", 0);
+        changeState = 0;
     }
 
 }

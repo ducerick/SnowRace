@@ -4,32 +4,32 @@ using UnityEngine;
 
 public class AISnowBall : MonoBehaviour
 {
-    public bool isFall;
-    [SerializeField] SphereCollider sphereCollider;
-
-    Animator anim;
-    [SerializeField] LayerMask layer;
+    public bool isFall; 
     float bridgeMultiplier = 5;
-
+    RaycastHit hit;
+    [SerializeField] SphereCollider sphereCollider;
     [SerializeField] float scaleMultiplier = 0f;
     [SerializeField] Transform snowball;
-    RaycastHit hit;
+    [SerializeField] LayerMask layer;
+    [SerializeField] AIAnimations anim;
+
     private void Start()
     {
         sphereCollider = GetComponentInChildren<SphereCollider>();
-        anim = GetComponent<Animator>();
     }
+
+
     private void Update()
     {
         snowball.Rotate(new Vector3(1, 0, 0), 10);
         //if (GameManager.instance. isFinish)
         //    return;
-        Physics.Raycast(transform.position + transform.forward / 5 + Vector3.up, -transform.up, out hit, 100, layer);
-        Debug.DrawRay(transform.position  + transform.forward / 5 + transform.transform.up, -transform.up * 5);
-        if (hit.collider == null)
-        {
-            return;
-        }
+        //Physics.Raycast(transform.position + Vector3.up / 5, transform.forward, out hit, 10, layer);
+        //Debug.DrawRay(transform.position + Vector3.up / 5 , transform.forward );
+        //if (hit.collider == null)
+        //{
+        //    return;
+        //}
         //if(hit.collider.tag == "Finish")
         //{
         //    if(TryGetComponent(out AI ai))
@@ -50,19 +50,25 @@ public class AISnowBall : MonoBehaviour
         //{
         //    CollectSnow();
         //}
-        if (hit.collider.tag == "Road" && snowball.transform.localScale.x > 0)
-        {
-            transform.position = new Vector3(hit.collider.transform.position.x, transform.position.y, transform.position.z);
-            if (!hit.collider.GetComponentInParent<AIBridgeController>().isFinish)
-            {
-                hit.collider.GetComponentInParent<AIBridgeController>().StretchBridge((.005f * bridgeMultiplier));
-                MakeBridge(hit.collider.gameObject);
-            }
-        }
+        //if (hit.collider.tag == "AIRoad" && snowball.transform.localScale.x > 0)
+        //{
+        //    Debug.Log($"Ai Pos: {transform.position}");
+        //    Debug.Log($"Ball Scale: {snowball.localScale.x}");
+        //    //transform.position = new Vector3(hit.collider.transform.position.x, transform.position.y, transform.position.z);
+        //    if (!hit.collider.GetComponentInParent<AIBridgeController>().isFinish)
+        //    {
+        //        hit.collider.GetComponentInParent<AIBridgeController>().StretchBridge((.005f * bridgeMultiplier));
+        //        MakeBridge(hit.collider.gameObject);
+        //    }
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("AIRoad"))
+        {
+            StartCoroutine(MakeBridge(other));
+        }
         //Fall(other);
     }
     public void Fall(Collider other)
@@ -102,27 +108,27 @@ public class AISnowBall : MonoBehaviour
     }
     //public IEnumerator Stand()
     //{
-        //isFall = false;
-        //if (TryGetComponent(out Movement movement))
-        //{
-        //    anim.SetBool("Run", false);
-        //    anim.SetBool("Idle", true);
-        //    movement.speed = 2;
-        //}
-        //else if (TryGetComponent(out AI aI))
-        //{
-        //    anim.SetBool("Run", true);
-        //    anim.SetBool("Idle", false);
-        //    aI.agent.isStopped = false;
-        //}
-        //scaleMultiplier = 0f;
-        //snowball.transform.localScale = Vector3.one * scaleMultiplier;
-        //sphereCollider.transform.localPosition = new Vector3(0, .25f, 0);
-        //yield return new WaitForSeconds(1f);
-        //GetComponent<Collider>().enabled = true;
-        //sphereCollider.enabled = true;
+    //isFall = false;
+    //if (TryGetComponent(out Movement movement))
+    //{
+    //    anim.SetBool("Run", false);
+    //    anim.SetBool("Idle", true);
+    //    movement.speed = 2;
     //}
-    private void MakeBridge(GameObject obj)
+    //else if (TryGetComponent(out AI aI))
+    //{
+    //    anim.SetBool("Run", true);
+    //    anim.SetBool("Idle", false);
+    //    aI.agent.isStopped = false;
+    //}
+    //scaleMultiplier = 0f;
+    //snowball.transform.localScale = Vector3.one * scaleMultiplier;
+    //sphereCollider.transform.localPosition = new Vector3(0, .25f, 0);
+    //yield return new WaitForSeconds(1f);
+    //GetComponent<Collider>().enabled = true;
+    //sphereCollider.enabled = true;
+    //}
+    public IEnumerator MakeBridge(Collider other)
     {
         //if (collectedSnow >= 100)
         //{
@@ -134,23 +140,35 @@ public class AISnowBall : MonoBehaviour
         //    collectedSnow = 0;
         //else
         //    collectedSnow -= (int)bridgeMultiplier;
-        scaleMultiplier -= .005f * bridgeMultiplier;
-        snowball.localPosition = new Vector3(0, snowball.localScale.y * 0.5f, snowball.localScale.z * 0.5f + 0.5f);
-        snowball.localScale = Vector3.one * scaleMultiplier;
+        AIBridgeController bridge = other.GetComponent<AIBridgeController>();
+        while (snowball.localScale.x > 0.0f && !AI.Instance.makeBridgeState.IsFinish())
+        {
+            scaleMultiplier -= .005f * bridgeMultiplier;
+            snowball.localPosition = new Vector3(0, snowball.localScale.y * 0.5f, snowball.localScale.z * 0.5f + 0.5f);
+            snowball.localScale = Vector3.one * scaleMultiplier;
+            bridge.StretchBridge(.01f * bridgeMultiplier);
+            yield return new WaitForSeconds(0f);
+        }
     }
-    public void CollectSnow()
+    public IEnumerator CollectSnow(float requiredSnow)
     {
         //collectedSnow += 1;
-        scaleMultiplier += .005f;
-        snowball.localPosition = new Vector3(0, snowball.localScale.y * 0.5f, snowball.localScale.z * 0.5f + 0.5f);
+
         //if (collectedSnow >= 100)
         //{
         //    snowball.SetActive(true);
         //}
         //else
         //    snowball.SetActive(false);
-        snowball.localScale = Vector3.one * scaleMultiplier;
+        while (snowball.localScale.x < requiredSnow)
+        {
+            scaleMultiplier += .001f;
+            snowball.localPosition = new Vector3(0, snowball.localScale.y * 0.5f, snowball.localScale.z * 0.5f + 0.5f);
+            snowball.localScale = Vector3.one * scaleMultiplier;
+            yield return new WaitForSeconds(1f);
+        }
     }
 
     public float GetSnowScale() => snowball.localScale.x;
+
 }

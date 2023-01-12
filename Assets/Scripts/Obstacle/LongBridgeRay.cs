@@ -40,13 +40,19 @@ public class LongBridgeRay : MonoBehaviour
         {
             Player.SetParent(Obstacle);
             Player.localPosition = new Vector3(0, 1, -1);
-            Obstacle.DOPath(positionsObstacle, positionsObstacle.Length * 0.2f).OnComplete(() =>
+            StartCoroutine(Delay());
+        }
+    }
+
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1f);
+        Obstacle.DOPath(positionsObstacle, positionsObstacle.Length * 0.2f).OnComplete(() =>
             {
                 Player.SetParent(null);
                 Obstacle.GetComponent<Rigidbody>().isKinematic = false;
                 Player.DOPath(positionsPlayer, positionsPlayer.Length);
             });
-        }
     }
 
 }
