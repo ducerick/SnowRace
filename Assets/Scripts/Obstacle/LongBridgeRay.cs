@@ -6,7 +6,6 @@ using DG.Tweening;
 
 public class LongBridgeRay : MonoBehaviour
 {
-    public Transform Player;
     public Transform Obstacle;
     public List<Transform> ListPosObstacle = new List<Transform>();
     private Vector3[] positionsObstacle = new Vector3[19];
@@ -38,21 +37,19 @@ public class LongBridgeRay : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Player.SetParent(Obstacle);
-            Player.localPosition = new Vector3(0, 1, -1);
-            StartCoroutine(Delay());
-        }
-    }
-
-    private IEnumerator Delay()
-    {
-        yield return new WaitForSeconds(1f);
-        Obstacle.DOPath(positionsObstacle, positionsObstacle.Length * 0.2f).OnComplete(() =>
+            other.transform.DOKill();
+            other.transform.SetParent(Obstacle);
+            other.transform.localPosition = new Vector3(0, 1, 0);
+            Obstacle.DOPath(positionsObstacle, positionsObstacle.Length * 0.2f).OnComplete(() =>
             {
-                Player.SetParent(null);
+                other.transform.SetParent(null);
                 Obstacle.GetComponent<Rigidbody>().isKinematic = false;
-                Player.DOPath(positionsPlayer, positionsPlayer.Length);
+                other.transform.DOPath(positionsPlayer, positionsPlayer.Length).OnComplete(() => {
+                    AI.Instance.agent.enabled = true;
+                    AI.Instance.currState = AI.Instance.rollSnowState;
+                });
             });
+        }
     }
 
 }

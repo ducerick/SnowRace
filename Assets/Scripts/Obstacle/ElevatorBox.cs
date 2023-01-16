@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ElevatorBox : MonoBehaviour
 {
-    public Transform Player;
     public Transform Obstacle;
     public Transform Door;
     public Transform Door1;
@@ -39,28 +38,33 @@ public class ElevatorBox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Player.SetParent(Obstacle);
-            Player.localPosition = new Vector3(0, 1, -1);
-            CloseDoor();
+            other.transform.DOKill();
+            other.transform.SetParent(Obstacle);
+            other.transform.localPosition = new Vector3(0, 1, -1);
+            CloseDoor(other.transform);
         }
     }
 
-    void CloseDoor()
+    void CloseDoor(Transform player)
     {
         Door.DOLocalMoveY(0, 1f).OnComplete(() => 
         {
             Obstacle.DOPath(positionsObstacle, positionsObstacle.Length * 2).OnComplete(()=> { 
-                OpenDoor();
+                OpenDoor(player);
             });
         });
     }
 
-    void OpenDoor()
+    void OpenDoor(Transform player)
     {
-        Player.SetParent(null);
+        player.SetParent(null);
         Door1.DOLocalMoveY(-2, 1f).OnComplete(() =>
         {
-            Player.DOPath(positionsPlayer, positionsPlayer.Length);
+            player.DOPath(positionsPlayer, positionsPlayer.Length).OnComplete(()=>
+            {
+                AI.Instance.agent.enabled = true;
+                AI.Instance.currState = AI.Instance.rollSnowState;
+            });
         });
     }
 }

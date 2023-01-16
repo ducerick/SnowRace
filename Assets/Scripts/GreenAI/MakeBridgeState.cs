@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class MakeBridgeState : AIState
 {
@@ -11,6 +12,7 @@ public class MakeBridgeState : AIState
     [SerializeField] private AI ai;
     public override void StartState(AIAnimations action)
     {
+        isFinishing = false;
         ai.agent.SetDestination(aiBridgeController.finishPos.position);
     }
     public override void UpdateState(AIAnimations action)
@@ -38,9 +40,9 @@ public class MakeBridgeState : AIState
             }
             if (isFinishing)
             {
-                ai.agent.SetDestination(aiBridgeController.acrossBridge.position);
                 ai.currState = ai.onLongBridgeState;
                 ai.agent.enabled = false;
+                ai.transform.DOMoveZ(aiBridgeController.acrossBridge.position.z, 1f);
             }
         }
     }

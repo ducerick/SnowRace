@@ -6,7 +6,6 @@ using DG.Tweening;
 
 public class LongBridgeFat : MonoBehaviour
 {
-    public Transform Player;
     public List<Transform> ListPosPlayer = new List<Transform>();
     private Vector3[] positionsPlayer = new Vector3[21];
 
@@ -27,7 +26,7 @@ public class LongBridgeFat : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Player.DOPath(positionsPlayer, positionsPlayer.Length * 0.5f).OnComplete(()=>
+            other.transform.DOPath(positionsPlayer, positionsPlayer.Length * 0.5f).OnComplete(()=>
             {
                 GamePopupMenu.Instance.gameObject.SetActive(true);
             });

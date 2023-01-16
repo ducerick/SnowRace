@@ -50,7 +50,8 @@ public class RollSnowState : AIState
     }
     public Transform FindWaypoint()
     {
-        Physics.Raycast(transform.position + Vector3.up, -transform.up, out hit, 100, layer);
+        Physics.Raycast(ai.transform.position + Vector3.up, -transform.up, out hit, 100, layer);
+        Debug.DrawRay(ai.transform.position + Vector3.up, -transform.up, Color.red);
 
 
         if (hit.collider.TryGetComponent(out Ground _ground) && hit.collider != null)
@@ -58,6 +59,7 @@ public class RollSnowState : AIState
             this.ground = _ground;
         }
         //Collider[] colliders = Physics.OverlapSphere(this.transform.position, distance, layer2);
-        return ground.wayPoints[Random.Range(0, ground.wayPoints.Count - 1)].transform;
+        Transform destination = ground.wayPoints[Random.Range(0, ground.wayPoints.Count - 1)].transform;
+        return destination;
     }
 }

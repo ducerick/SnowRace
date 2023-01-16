@@ -69,6 +69,11 @@ public class AISnowBall : MonoBehaviour
         {
             StartCoroutine(MakeBridge(other));
         }
+
+        if (other.CompareTag("Step"))
+        {
+            other.GetComponent<Renderer>().enabled = true;
+        }
         //Fall(other);
     }
     public void Fall(Collider other)
@@ -140,7 +145,7 @@ public class AISnowBall : MonoBehaviour
         //    collectedSnow = 0;
         //else
         //    collectedSnow -= (int)bridgeMultiplier;
-        AIBridgeController bridge = other.GetComponent<AIBridgeController>();
+        AIBridgeController bridge = other.GetComponentInParent<AIBridgeController>();
         while (snowball.localScale.x > 0.0f && !AI.Instance.makeBridgeState.IsFinish())
         {
             scaleMultiplier -= .005f * bridgeMultiplier;
