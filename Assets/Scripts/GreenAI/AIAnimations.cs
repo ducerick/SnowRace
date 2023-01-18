@@ -4,35 +4,6 @@ using UnityEngine;
 
 public class AIAnimations : MonoBehaviour
 {
-    //[SerializeField] Animator animator;
-    //private void Awake()
-    //{
-    //    animator = GetComponent<Animator>();
-    //}
-    //public void RollSnowAnim()
-    //{
-    //    animator.SetBool("Run", true);
-    //    animator.SetBool("Idle", false);
-    //}
-    //public void DeathAnim()
-    //{
-    //    animator.SetTrigger("Death");
-    //    animator.SetBool("Run", false);
-    //    animator.SetBool("Idle", false);
-    //}
-    //public void IdleAnim()
-    //{
-    //    animator.SetBool("Run", false);
-    //    animator.SetBool("Idle", true);
-    //}
-    //public void Dance()
-    //{
-    //    animator.SetBool("Run", false);
-    //    animator.SetBool("Idle", false);
-
-    //    animator.SetTrigger("Win");
-    //}
-
     [SerializeField] private AISnowBall aiSnowBall;
     [SerializeField] private Animator animator;
     private float changeState = 0.0f;

@@ -26,16 +26,10 @@ public class Collision : MonoBehaviour
         set { onBridge = value; }
     }
 
-
-    //private Vector3 velocity;
-    //private Rigidbody myRigidbody;
     private PlayerController _player;
-    //private Transform planeTranform;
 
     private void Start()
     {
-        //myRigidbody = transform.GetComponent<Rigidbody>();
-        //velocity = myRigidbody.velocity;
         _player = GameManager.Instance.player;
     }
 
@@ -59,16 +53,9 @@ public class Collision : MonoBehaviour
     }
     private void OnCollisionEnter(UnityEngine.Collision collision)
     {
-        //if (collision.transform.CompareTag("Boat"))
-        //{
-        //    transform.SetParent(collision.transform);
-        //    transform.localPosition = new Vector3(1, 0, 3);
-        //}
-
         if (collision.transform.CompareTag("Plane"))
         {
             _player.OnPlane = true;
-            //planeTranform = collision.transform;
         }
 
         //if (collision.transform.CompareTag("IceBridge"))
@@ -99,14 +86,6 @@ public class Collision : MonoBehaviour
 
         if (other.CompareTag("Step"))
         {
-            //if (GameManager.Instance.snowBall.BallScale.x >= 0f)
-            //{
-            //    onBridge = true;
-            //    EventDispatcher.Instance.PostEvent(EventID.OnCharacterBuildStep, other.gameObject);
-            //} else
-            //{
-            //    GameState.Instance.GState = State.Stop;
-            //}
             onBridge = true;
             EventDispatcher.Instance.PostEvent(EventID.OnCharacterBuildStep, other.gameObject);
 
